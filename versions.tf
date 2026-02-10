@@ -3,7 +3,7 @@ terraform {
     organization = "bitraorg"
 
     workspaces {
-      prefix = "topalpha-"
+      name = "topalpha"
     }
   }
 }
