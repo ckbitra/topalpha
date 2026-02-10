@@ -21,7 +21,7 @@ resource "aws_instance" "web" {
 
   ami           = "ami-0c1fe732b5494dc14"
   instance_type = "t3.micro"
-  subnet_id     = "subnet-065963ad393ab557b"
+  subnet_id     = "subnet-0e7e31c6de6e1374e"
 
   tags = {
     Name = "web-server-${count.index + 1}"  # web-server-1, -2, -3
