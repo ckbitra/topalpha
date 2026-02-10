@@ -1,0 +1,39 @@
+# Local .terraform directories (providers, modules)
+**/.terraform/*
+**/.terraformrc
+**/terraform.rc
+
+# Terraform state files (never commit these)
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+# Terraform plan files
+*.tfplan
+*.tfplan.binary
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Variable files (often contain secrets)
+*.auto.tfvars
+*.override.tf
+*_override.tf
+*.tfvars
+*.tfvars.json
+
+# Environment-specific files
+.env
+.envrc
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+*.swp
+*.swo
+*~
