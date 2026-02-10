@@ -2,7 +2,7 @@ resource "aws_instance" "this" {
   ami           = "ami-0c1fe732b5494dc14"  # Your AMI ID (e.g., Amazon Linux 2023)
   instance_type = "t3.micro"
 
-  subnet_id = "subnet-065963ad393ab557b"  # Existing subnet ID
+  subnet_id = "subnet-061c2ac004db6dcd6"  # Existing subnet ID
 
   tags = {
     Name        = "MyEC2Instance"
