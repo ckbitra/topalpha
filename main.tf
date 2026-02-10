@@ -10,3 +10,20 @@ resource "aws_instance" "this" {
     Owner       = "Bitra Team"
   }
 }
+
+
+variable "instance_count" {
+  default = 3
+}
+
+resource "aws_instance" "web" {
+  count = var.instance_count
+
+  ami           = "ami-0c1fe732b5494dc14"
+  instance_type = "t3.micro"
+  subnet_id     = "subnet-065963ad393ab557b"
+
+  tags = {
+    Name = "web-server-${count.index + 1}"  # web-server-1, -2, -3
+  }
+}
