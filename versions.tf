@@ -1,8 +1,9 @@
 terraform {
   backend "remote" {
-    organization = "bitraorg"  # HCP org
+    organization = "bitraorg"
+
     workspaces {
-      name = "topalpha"        # Exact workspace name
+      prefix = "topalpha-"
     }
   }
 }
