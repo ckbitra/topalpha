@@ -13,7 +13,7 @@ resource "aws_instance" "this" {
 
 
 resource "aws_s3_bucket" "my-new-S3-bucket" {
-  bucket = "my-new-tf-test-bucket-bryan"
+  bucket = "my-new-tf-test-bucket-bitra2342o341234"
 
   tags = {
     Name    = "My S3 Bucket"
