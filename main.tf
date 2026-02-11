@@ -31,6 +31,20 @@ resource "aws_s3_bucket_ownership_controls" "my_new_bucket_acl" {
   }
 }
 
+
+# IAM users
+resource "aws_iam_user" "developers" {
+  for_each = toset(["developer1", "developer2", "developer3"])
+  name     = each.key
+}
+
+# IAM group membership
+resource "aws_iam_user_group_membership" "dev_membership" {
+  for_each = aws_iam_user.developers
+  user     = each.value.name
+  groups   = [aws_iam_group.developers.name]
+}
+
 # 3️⃣ IAM group for developers
 resource "aws_iam_group" "developers" {
   name = "developers"
