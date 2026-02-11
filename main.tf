@@ -14,82 +14,21 @@ resource "aws_instance" "this" {
   }
 }
 
-########################################
-# 2️⃣ S3 Bucket
-########################################
-resource "aws_s3_bucket" "my_new_bucket" {
-  bucket = "my-new-tf-test-bucket-bryan"
+resource "aws_security_group" "my-new-security-group" {
+  name        = "web_server_inbound"
+  description = "Allow inbound traffic on tcp/443"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress {
+    description = "Allow 443 from the Internet"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   tags = {
-    Name    = "My S3 Bucket"
+    Name    = "web_server_inbound"
     Purpose = "Intro to Resource Blocks Lab"
   }
-}
-
-# Bucket ownership controls
-resource "aws_s3_bucket_ownership_controls" "my_new_bucket_acl" {
-  bucket = aws_s3_bucket.my_new_bucket.id
-
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
-
-########################################
-# 3️⃣ IAM Group for Developers
-########################################
-resource "aws_iam_group" "developers" {
-  name = "developers"
-}
-
-########################################
-# 4️⃣ IAM Policy for S3 Access
-########################################
-resource "aws_iam_policy" "dev_s3_access" {
-  name        = "DeveloperS3Access"
-  description = "Allow developers to access S3 bucket"
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:ListBucket"
-        ]
-        Resource = aws_s3_bucket.my_new_bucket.arn
-      },
-      {
-        Effect = "Allow"
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject"
-        ]
-        Resource = "${aws_s3_bucket.my_new_bucket.arn}/*"
-      }
-    ]
-  })
-}
-
-# Attach policy to IAM group
-resource "aws_iam_group_policy_attachment" "dev_group_attach" {
-  group      = aws_iam_group.developers.name
-  policy_arn = aws_iam_policy.dev_s3_access.arn
-}
-
-########################################
-# 5️⃣ IAM Users
-########################################
-resource "aws_iam_user" "developers" {
-  for_each = toset(["developer1", "developer2", "developer3"])
-  name     = each.key
-}
-
-########################################
-# 6️⃣ Add Users to Group
-########################################
-resource "aws_iam_user_group_membership" "dev_membership" {
-  for_each = aws_iam_user.developers
-  user     = each.value.name
-  groups   = [aws_iam_group.developers.name]
 }
