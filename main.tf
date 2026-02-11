@@ -1,8 +1,8 @@
 resource "aws_instance" "this" {
-  ami           = "ami-0c1fe732b5494dc14"  # Your AMI ID (e.g., Amazon Linux 2023)
+  ami           = "ami-0c1fe732b5494dc14" # Your AMI ID (e.g., Amazon Linux 2023)
   instance_type = "t3.micro"
 
-  subnet_id = "subnet-0e7e31c6de6e1374e"  # Existing subnet ID
+  subnet_id = "subnet-0e7e31c6de6e1374e" # Existing subnet ID
 
   tags = {
     Name        = "MyEC2Instance"
@@ -12,18 +12,18 @@ resource "aws_instance" "this" {
 }
 
 
-variable "instance_count" {
-  default = 3
-}
-
-resource "aws_instance" "web" {
-  count = var.instance_count
-
-  ami           = "ami-0c1fe732b5494dc14"
-  instance_type = "t3.micro"
-  subnet_id     = "subnet-0e7e31c6de6e1374e"
+resource "aws_s3_bucket" "my-new-S3-bucket" {
+  bucket = "my-new-tf-test-bucket-bryan"
 
   tags = {
-    Name = "web-server-${count.index + 1}"  # web-server-1, -2, -3
+    Name    = "My S3 Bucket"
+    Purpose = "Intro to Resource Blocks Lab"
+  }
+}
+
+resource "aws_s3_bucket_ownership_controls" "my_new_bucket_acl" {
+  bucket = aws_s3_bucket.my-new-S3-bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
   }
 }
